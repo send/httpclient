@@ -8,6 +8,7 @@
 
 require 'stringio'
 require 'digest/sha1'
+require 'timeout'
 
 # Extra library
 require 'httpclient/version'
@@ -260,24 +261,20 @@ class HTTPClient
     end
   end
 
-  # Raised for indicating a timeout error.
-  class TimeoutError < RuntimeError
-  end
-
   # Raised for indicating a connection timeout error.
   # You can configure connection timeout via HTTPClient#connect_timeout=.
-  class ConnectTimeoutError < TimeoutError
+  class ConnectTimeoutError < Timeout::Error
   end
 
   # Raised for indicating a request sending timeout error.
   # You can configure request sending timeout via HTTPClient#send_timeout=.
-  class SendTimeoutError < TimeoutError
+  class SendTimeoutError < Timeout::Error
   end
 
   # Raised for indicating a response receiving timeout error.
   # You can configure response receiving timeout via
   # HTTPClient#receive_timeout=.
-  class ReceiveTimeoutError < TimeoutError
+  class ReceiveTimeoutError < Timeout::Error
   end
 
   # Deprecated.  just for backward compatibility
